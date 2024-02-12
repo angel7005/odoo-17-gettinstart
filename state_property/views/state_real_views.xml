@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View state.real View Tree -->
+    <record id="view_state_real_tree" model="ir.ui.view">
+        <field name="name">view.state.real.tree</field>
+        <field name="model">state.real</field>
+        <field name="arch" type="xml">
+            <tree string="State Real" decoration-success="status in ['A','R']" 
+                                      decoration-bf="status == 'A'"
+                                      decoration-muted="status == 'S'"
+                                      decoration-danger="status == 'C'">
+                <field name="name"/>
+                <field name="property_type_id"/>
+                <field name='buyer_id'/>
+                <field name="salesman_id"/>
+                <field name="date_availability"/>
+                <field name="tags_id" widget="many2many_tags" options="{'color_field': 'color' }"/>
+                <field name="postcode"/>
+                <field name="bedrooms"/>
+                <field name="living_area"/>
+                <field name="expected_price"/>
+                <field name="selling_price"/>
+                <field name="status" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- View state.real form -->
+    <record id="view_state_real_form" model="ir.ui.view">
+        <field name="name">view.state.real.form</field>
+        <field name="model">state.real</field>
+        <field name="arch" type="xml">
+            <form string="State Real">
+                  <header>
+                    <button name="act_property_sold" class="btn-primary" icon="fa-sold-o" string="SOLD" type="object" invisible="status in ['S','C']" />
+                    <button name='act_property_cancel' class="btn-secondary" icon="fa-cancel-o" string="CANCEL" type="object"  invisible="status in ['S','C']"/>
+                    <field name="status" widget="statusbar" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Name..."/>
+                        </h1>
+                        <field name="tags_id" widget='many2many_tags' options="{'color_field': 'color' }"/>
+
+                        <group>
+                            <group>
+                                <field name="property_type_id" placeholder="Property state ..."/>
+                                <field name="postcode" placeholder="postcode..."/>
+                                <field name="date_availability" placeholder="date availability..."/>
+                            </group>
+                            <group>
+                                <field name="expected_price" placeholder="Expected price..."/>
+                                <field name="best_offer"/>
+                                <field name="selling_price" placeholder="Selling prince..."/>
+                            </group>
+                        </group>
+                    </div>
+                    <notebook>
+                        <page string="Description">
+                          <group>
+                            <group>
+                                <field name="description" placeholder="Descriptions.."/>
+                                <field name="bedrooms" placeholder="Bedrooms count" />
+                                <field name="living_area"/>
+                                <field name="facades" placeholder="Facades..."/>
+                                <field name="garage"/>                                                               
+                            </group>
+                            <group>
+                                <field name="garden" placeholder="Garden..."/>
+                                <field name="garden_area" placeholder="garden area(sqm)" invisible="not garden"/>
+                                <field name="garden_orientation" placeholder="garden orientation" invisible="not garden"/>
+                                <field name="total_area"/>
+                            </group>
+                            </group>
+                        </page>
+                        <page string="Offers">
+                            <group>
+                                <field name="offers_ids" readonly="status in ['A','C','S']"/>
+                            </group>
+                        </page>
+                        <page string="Other info">
+                            <group>
+                                <field name="salesman_id" />
+                                <field name="buyer_id" />
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View state.real View Tree -->
+    <record id="view_state_real_kanban" model="ir.ui.view">
+        <field name="name">view.state.real.kanban</field>
+        <field name="model">state.real</field>
+        <field name="arch" type="xml">          
+            <kanban default_group_by="status">        
+                <progressbar field="status" colors='{"S":"success", "R":"muted", "A":"warning"}'/>
+                <templates>
+                 <t t-name="kanban-box">
+                   <div class="oe_kanban_global_click">
+                     <div>
+                         <field name="name" />
+                     </div>
+                      <div>
+                          <label for='expected_price'>Price expected: </label>                      
+                          <field name="expected_price" />                                            
+                      </div>
+                      <div t-if="record.status.raw_value == 'N'">
+                        This is new!
+                      </div>
+                      <div t-if="record.status.raw_value in ['A','R']">
+                         <label for="best_offer">Besf offer: </label>
+                         <field name="best_offer" decoration-success="True"/>
+                      </div>
+                      <div t-if="record.status.raw_value  == 'A'">
+                          <label for="selling_price">Selling price: </label>
+                          <field name="selling_price" decoration-bf="True"/>
+                      </div>
+                      <div>
+                          <field name="tags_id" widget="many2many_tags" options="{'color_field': 'color' }"/>
+                      </div>                      
+                      <div>
+                        <label for="status">Estatus: </label>
+                        <field name="status" />
+                      </div>
+                   </div>                   
+                 </t>
+             </templates>
+           </kanban>        
+        </field>
+    </record>
+    
+
+    <!-- View state.real search -->
+    <record id="view_state_real_search" model="ir.ui.view">
+        <field name="name">view.state.real.search</field>
+        <field name="model">state.real</field>
+        <field name="arch" type="xml">
+            <search string="State Real">
+                <field name="name" string='Real state'/>
+                <field name="postcode" string='Postcode'/>
+                <field name="bedrooms" string='Bedrooms'/>
+                <field name='expected_price' string='Expected price'/>
+                <field name='status' string='Satus'/>
+                <field name='living_area' string='Living area' filter_domain="[('living_area', '>=', self)]"/>
+                
+                <separator/>
+                <group expand="2" string="Group By">
+                    <filter string="Name" name="name" domain="[('name','like','name')]" context="{'group_by':'name'}"/>
+                    <filter string="Postcode" name="postcode" domain="[('postcode','like','name')]" context="{'group_by':'postcode'}"/>
+                    <filter string="Expected price" name="expected_price" domain="[('expected_price','>',0)]" context="{'group_by':'expected_price'}"/>
+                    <filter string="Bedrooms" name="bedrooms" domain="[]" context="{'group_by':'bedrooms'}"/>
+                    <filter string="Status" name="status" domain="[]" context="{'group_by':'status'}"/>
+                    
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action state.real -->
+    <record id="action_state_real" model="ir.actions.act_window">
+        <field name="name">State Real</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">state.real</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new State Real.
+            </p>
+        </field>
+    </record>
+</odoo>

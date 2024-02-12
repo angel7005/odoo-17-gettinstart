@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View PropertyType View Tree -->
+    <record id="view_PropertyType_tree" model="ir.ui.view">
+        <field name="name">view.PropertyType.tree</field>
+        <field name="model">state.property.type</field>
+        <field name="arch" type="xml">       
+            <tree string="Property" default_order='sequence asc'>
+                <field name="sequence"/>
+                <field name="name"/>
+                <field name="offers_count" widget="statinfo" string="Offers"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- View PropertyType form -->
+    <record id="view_PropertyType_form" model="ir.ui.view">
+        <field name="name">view.PropertyType.form</field>
+        <field name="model">state.property.type</field>
+        <field name="arch" type="xml">
+            <form string="PropertyType">
+                <header>
+                      <div class="oe_button_box" name="button_box" groups="base.group_user">
+                            <button name="act_offer_open"
+                                    type="object"                                                                        
+                                    class="oe_stat_button"
+                                    icon="fa-users"
+                                    help="Count of offert">
+                                <field name="offers_count" widget="statinfo" />
+                            </button>
+                        </div>                         
+                      
+                </header>
+                <sheet>
+                    <div class="oe_title">                        
+                        <h1>
+                            <field name="name" placeholder="Name..."/>
+                        </h1>
+                        <field name="sequence"/>
+                    </div>
+                    <group>                    
+                        <notebook>                                                                 
+                            <page string='Properties'>
+                                <field name='property_ids'>
+                                   <tree>
+                                       <field name='name'/>
+                                       <field name='expected_price'/>
+                                       <field name='status'/>
+                                       </tree>
+                                </field>
+                             </page>
+                        </notebook>
+                    <group>
+                </group>
+                </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View PropertyType search -->
+    <record id="view_PropertyType_search" model="ir.ui.view">
+        <field name="name">view.PropertyType.search</field>
+        <field name="model">state.property.type</field>
+        <field name="arch" type="xml">
+            <search string="PropertyType">
+                <group expand="1" string="Group By">
+                    <filter string="Name" name="name" domain="[]" context="{'group_by':'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action PropertyType -->
+    <record id="action_PropertyType" model="ir.actions.act_window">
+        <field name="name">PropertyType</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">state.property.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new PropertyType.
+            </p>
+        </field>
+    </record>
+    
+</odoo>

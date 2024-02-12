@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="action_state_property_client" model="ir.actions.client">
+            <field name="name">state_property</field>
+            <field name="tag">stateProperty</field>
+            <field name="target">main</field>
+        </record>
+        
+        <menuitem id="menu_state_root"     name="State" />
+        
+        <menuitem id="menu_action_state_real"    name="Property" parent="menu_state_root" action="action_state_real" sequence="11"/>
+        <menuitem id="menu_action_property_type" name="Type" parent="menu_state_root" action="action_PropertyType" sequence="11"/>
+        <menuitem id="menu_action_property_tag"  name="Tag" parent="menu_state_root" action="action_state_property_tag" sequence="11"/>
+        <menuitem id="menu_action_salesman" name="Salesman" parent="menu_state_root" action="action_res_users" sequence="11"/>
+    </data>
+</odoo>

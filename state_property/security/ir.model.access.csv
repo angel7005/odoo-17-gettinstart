@@ -1,0 +1,8 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_state_real_manager,state_real_manager,model_state_real,,1,1,1,1
+access_model_state_real,access_model_state_real,model_state_real,base.group_user,1,0,0,0
+access_state_property_type_manager,state_property_type_manager,model_state_property_type,,1,1,1,1
+access_model_state_property_type,access_model_state_property_type,model_state_property_type,base.group_user,1,0,0,0
+access_state_property_tag_manager,state_property_tag_manager,model_state_property_tag,,1,1,1,1
+access_state_property_offer_manager,state_property_offer_manager,model_state_property_offer,,1,1,1,1
+access_salesman_manager,res_salesman_manager,model_res_users,,1,1,1,1

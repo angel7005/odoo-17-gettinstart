@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- View state.real tree -->
+    <record id="view_state_real_tree" model="ir.ui.view">
+        <field name="name">view.state.real.tree</field>
+        <field name="model">state.real</field>
+        <field name="inherit_id" ref="state_property.view_state_real_tree"/>
+        <field name="arch" type="xml">
+            <tree string="State Real">
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- View state.real form -->
+    <record id="view_state_real_form" model="ir.ui.view">
+        <field name="name">view.state.real.form</field>
+        <field name="model">state.real</field>
+        <field name="inherit_id" ref="state_property.view_state_real_form"/>
+        <field name="arch" type="xml">
+            <form string="State Real">
+            </form>
+        </field>
+    </record>
+
+    
+
+</odoo>
